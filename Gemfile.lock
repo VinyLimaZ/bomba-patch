@@ -85,11 +85,10 @@ GEM
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     jsbundling-rails (1.0.3)
       railties (>= 6.0.0)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -189,8 +188,8 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap
   debug
-  jbuilder
   jsbundling-rails
+  jsonapi-serializer (~> 2.2.0)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4)
