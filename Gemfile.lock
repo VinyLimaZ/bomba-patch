@@ -66,6 +66,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
@@ -75,8 +76,14 @@ GEM
     debug (1.6.2)
       irb (>= 1.3.6)
       reline (>= 0.3.1)
+    diff-lcs (1.5.0)
     digest (3.1.0)
     erubi (1.11.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -84,11 +91,10 @@ GEM
     io-console (0.5.11)
     irb (1.4.1)
       reline (>= 0.3.0)
-    jbuilder (2.11.5)
-      actionview (>= 5.0.0)
-      activesupport (>= 5.0.0)
     jsbundling-rails (1.0.3)
       railties (>= 6.0.0)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -153,6 +159,24 @@ GEM
     redis (4.8.0)
     reline (0.3.1)
       io-console (~> 0.5)
+    rspec-core (3.11.0)
+      rspec-support (~> 3.11.0)
+    rspec-expectations (3.11.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-json_expectations (2.2.0)
+    rspec-mocks (3.11.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.11.0)
+    rspec-rails (5.1.2)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.11.1)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
@@ -185,14 +209,18 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bootsnap
   debug
-  jbuilder
+  factory_bot_rails (~> 6.2.0)
   jsbundling-rails
+  jsonapi-serializer (~> 2.2.0)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4)
   redis (~> 4.0)
+  rspec-json_expectations
+  rspec-rails (~> 5.1.2)
   sprockets-rails
   stimulus-rails
   turbo-rails
