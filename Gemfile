@@ -43,6 +43,15 @@ gem "bootsnap", require: false
 # [https://github.com/jsonapi-serializer/jsonapi-serializer]
 gem 'jsonapi-serializer', '~> 2.2.0'
 
+# A ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
+# [https://github.com/jwt/ruby-jwt]
+gem 'jwt', '~> 2.5.0'
+
+# Access environment variables. Also includes presence validation, type coercion
+# and default values.
+# [https://github.com/fnando/superconfig]
+gem 'superconfig', '~> 2.1.0'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

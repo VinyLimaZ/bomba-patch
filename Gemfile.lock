@@ -95,6 +95,7 @@ GEM
       railties (>= 6.0.0)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
+    jwt (2.5.0)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -187,6 +188,7 @@ GEM
     stimulus-rails (1.1.0)
       railties (>= 6.0.0)
     strscan (3.0.4)
+    superconfig (2.1.0)
     thor (1.2.1)
     timeout (0.3.0)
     turbo-rails (1.3.0)
@@ -215,6 +217,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.2.0)
   jsbundling-rails
   jsonapi-serializer (~> 2.2.0)
+  jwt (~> 2.5.0)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4)
@@ -223,6 +226,7 @@ DEPENDENCIES
   rspec-rails (~> 5.1.2)
   sprockets-rails
   stimulus-rails
+  superconfig (~> 2.1.0)
   turbo-rails
   tzinfo-data
   web-console
