@@ -6,8 +6,11 @@ class ApplicationController < ActionController::API
 
   def authenticate_user!
     payload = JwtAuth.decode(auth_token)
-
     @current_user = User.find(payload['sub'])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: 'User not found' }, status: :unauthorized
+  rescue JWT::ExpiredSignature
+    render json: { error: 'Invalid auth token' }, status: :unauthorized
   end
 
   def auth_token

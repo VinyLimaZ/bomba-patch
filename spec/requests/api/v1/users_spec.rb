@@ -20,7 +20,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
         it 'returns user attributes', :aggregate_failures do
           expect { request! }.to change(User, :count).by(1)
 
-          expect(response).to have_http_status(:ok)
+          expect(response).to be_successful
           expect(json['data']['type']).to eq('user')
           expect(json['data']['attributes']['name']).to eq('Jane Doe')
           expect(json['data']['attributes']['email']).to eq('jdoe@fbi.com')
@@ -89,6 +89,35 @@ RSpec.describe Api::V1::UsersController, type: :request do
 
       it 'returns error response' do
         expect { request! }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe 'Showing a user' do
+    let!(:another_user) { create(:user) }
+    let(:user_id) { another_user.id }
+
+    context 'when not authenticated' do
+      it 'returns not authorized' do
+        get api_v1_user_path(user_id), headers: authenticate!(User.new(id: 1))
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(json).to include_json(error: 'User not found')
+      end
+    end
+
+    context 'when authenticated' do
+      subject(:request!) { get api_v1_user_path(user_id), headers: authenticate!(user) }
+
+      context 'with existent user id' do
+        it 'returns the user' do
+          request!
+
+          expect(response).to be_successful
+          expect(json['data']['type']).to eq('user')
+          expect(json['data']['attributes']['name']).to eq(another_user.name)
+          expect(json['data']['attributes']['email']).to eq(another_user.email)
+        end
       end
     end
   end
