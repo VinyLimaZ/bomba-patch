@@ -3,10 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :request do
+  include ApiHelpers
+
   let(:json) { JSON.parse(response.body) }
+  let!(:user) { create(:user) }
 
   describe 'Creating a user' do
-    subject(:request!) { post api_v1_users_path, params: params }
+    subject(:request!) { post api_v1_users_path, params: params, headers: authenticate!(user) }
 
     context 'when creating a user' do
       context 'with right attributes' do
@@ -40,7 +43,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
   end
 
   describe 'Updating an user' do
-    subject(:request!) { patch api_v1_user_path(user), params: params }
+    subject(:request!) { patch api_v1_user_path(user), params: params, headers: authenticate!(user) }
 
     let(:user) { create(:user, name: 'Vinicius Lima', email: 'vini@example.com') }
 
@@ -67,7 +70,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
   end
 
   describe 'Removing a user' do
-    subject(:request!) { delete api_v1_user_path(user_id) }
+    subject(:request!) { delete api_v1_user_path(user_id), headers: authenticate!(user) }
 
     let!(:user) { create(:user) }
 
