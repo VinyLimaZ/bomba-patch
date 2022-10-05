@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   concern :api_base do
     resources :users, only: %i[create update destroy]
-    resources :teams, only: %i[create update destroy]
+    resources :teams, only: %i[index show create update destroy]
   end
 
   namespace :api do
