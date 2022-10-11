@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   default_url_options host: ENV.fetch('HOST_URL') { 'http://testing.io' }
 
   concern :api_base do
+    resources :users, only: %i[create update destroy]
+    resources :teams, only: %i[index show create update destroy]
     post '/sign_in', to: 'authentication#create'
     resources :users
   end
