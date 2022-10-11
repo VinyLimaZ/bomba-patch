@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'pry'
 
 RSpec.describe Api::V1::TeamsController, type: :request do
+  include ApiHelpers
+
   let(:json) { JSON.parse(response.body) }
+  let(:user) { create(:user) }
 
   describe 'POST create' do
-    subject(:request!) { post api_v1_teams_path, params: params }
+    subject(:request!) { post api_v1_teams_path, params: params, headers: authenticate!(user) }
 
     context 'when creating a team' do
       context 'with right attributes' do
@@ -45,7 +47,7 @@ RSpec.describe Api::V1::TeamsController, type: :request do
   end
 
   describe 'PATCH update' do
-    subject(:request!) { patch api_v1_team_path(team), params: params }
+    subject(:request!) { patch api_v1_team_path(team), params: params, headers: authenticate!(user) }
 
     let(:team) { create(:team, name: 'Ibis', description: 'Ibis Futebol') }
 
@@ -72,7 +74,7 @@ RSpec.describe Api::V1::TeamsController, type: :request do
   end
 
   describe 'DELETE destroy' do
-    subject(:request!) { delete api_v1_team_path(team_id) }
+    subject(:request!) { delete api_v1_team_path(team_id), headers: authenticate!(user) }
 
     let!(:team) { create(:team) }
 
@@ -96,7 +98,7 @@ RSpec.describe Api::V1::TeamsController, type: :request do
   end
 
   describe 'GET show' do
-    subject(:request!) { get api_v1_team_path(team_id) }
+    subject(:request!) { get api_v1_team_path(team_id), headers: authenticate!(user) }
 
     let(:team) { create(:team) }
     let(:team_id) { team.id }
@@ -128,10 +130,11 @@ RSpec.describe Api::V1::TeamsController, type: :request do
   end
 
   describe 'GET index' do
-    subject(:request!) { get api_v1_teams_path }
+    subject(:request!) { get api_v1_teams_path, headers: authenticate!(user) }
     let!(:teams) { create_list(:team, 2) }
 
     before { request! }
+
     it 'returns all teams' do
       expect(json).to include_json(
         {
