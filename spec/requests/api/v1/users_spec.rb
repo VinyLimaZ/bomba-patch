@@ -3,10 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :request do
+  include ApiHelpers
+
   let(:json) { JSON.parse(response.body) }
+  let!(:user) { create(:user) }
 
   describe 'Creating a user' do
-    subject(:request!) { post api_v1_users_path, params: params }
+    subject(:request!) { post api_v1_users_path, params: params, headers: authenticate!(user) }
 
     context 'when creating a user' do
       context 'with right attributes' do
@@ -17,7 +20,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
         it 'returns user attributes', :aggregate_failures do
           expect { request! }.to change(User, :count).by(1)
 
-          expect(response).to have_http_status(:ok)
+          expect(response).to be_successful
           expect(json['data']['type']).to eq('user')
           expect(json['data']['attributes']['name']).to eq('Jane Doe')
           expect(json['data']['attributes']['email']).to eq('jdoe@fbi.com')
@@ -40,7 +43,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
   end
 
   describe 'Updating an user' do
-    subject(:request!) { patch api_v1_user_path(user), params: params }
+    subject(:request!) { patch api_v1_user_path(user), params: params, headers: authenticate!(user) }
 
     let(:user) { create(:user, name: 'Vinicius Lima', email: 'vini@example.com') }
 
@@ -67,7 +70,7 @@ RSpec.describe Api::V1::UsersController, type: :request do
   end
 
   describe 'Removing a user' do
-    subject(:request!) { delete api_v1_user_path(user_id) }
+    subject(:request!) { delete api_v1_user_path(user_id), headers: authenticate!(user) }
 
     let!(:user) { create(:user) }
 
@@ -86,6 +89,35 @@ RSpec.describe Api::V1::UsersController, type: :request do
 
       it 'returns error response' do
         expect { request! }.to raise_error(ActiveRecord::RecordNotFound)
+      end
+    end
+  end
+
+  describe 'Showing a user' do
+    let!(:another_user) { create(:user) }
+    let(:user_id) { another_user.id }
+
+    context 'when not authenticated' do
+      it 'returns not authorized' do
+        get api_v1_user_path(user_id), headers: authenticate!(User.new(id: 1))
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(json).to include_json(error: 'User not found')
+      end
+    end
+
+    context 'when authenticated' do
+      subject(:request!) { get api_v1_user_path(user_id), headers: authenticate!(user) }
+
+      context 'with existent user id' do
+        it 'returns the user' do
+          request!
+
+          expect(response).to be_successful
+          expect(json['data']['type']).to eq('user')
+          expect(json['data']['attributes']['name']).to eq(another_user.name)
+          expect(json['data']['attributes']['email']).to eq(another_user.email)
+        end
       end
     end
   end
