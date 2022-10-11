@@ -15,7 +15,8 @@ module BombaPatch
     config.load_defaults 7.0
 
     config.time_zone = 'Brasilia'
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.autoload_paths << config.root.join('lib')
+    config.eager_load_paths << config.root.join('lib')
     config.generators.system_tests = nil
   end
 end
