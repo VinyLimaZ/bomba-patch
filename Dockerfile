@@ -1,17 +1,17 @@
 FROM ruby:3.1.2
 
-ENV DATABASE_HOST=db
-ENV DATABASE_USERNAME=postgres
-ENV POSTGRES_PASSWORD=password
+# Dependencies
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 
-RUN mkdir /app
-WORKDIR /app
+# Create User
+RUN useradd -ms /bin/bash bombapatch
+USER bombapatch
+WORKDIR /home/bombapatch/app
 
-EXPOSE 3000
+COPY --chown=bombapatch Gemfile* /
 
-COPY Gemfile .
-COPY Gemfile.lock .
-RUN gem update bundler
-RUN bundle install
+RUN bundle
 
-CMD rails server -b 0.0.0.0
+COPY --chown=bombapatch . .
+
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
