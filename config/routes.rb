@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   concern :api_base do
     resources :users, only: %i[create update destroy]
     resources :teams, only: %i[index show create update destroy]
-    post '/sign_in', to: 'authentication#create'
-    resources :users
+    resources :matches, only: %i[index show create update destroy]
+    post '/sign_in', to: 'authentication#create'    
   end
 
   namespace :api do

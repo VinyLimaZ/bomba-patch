@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:15
+    environment:
+      POSTGRES_DB: bombapatch
+      POSTGRES_PASSWORD: bombapatch-passwd
+      POSTGRES_USER: bombapatch
+    ports:
+     - 5432:5432
+    volumes:
+      - ./tmp/postgres_data:/var/lib/postgresql/data
+
+  bombapatch:
+    image: bombapatch
+    build: .
+    restart: always
+    depends_on:
+      - 'postgres'
+    env_file: ${ENV_FILE:-.env.docker}
+    ports:
+      - 3000:3000
+
+  migrations:
+    image: bombapatch
+    container_name: migrations
+    depends_on:
+      - 'postgres'
+    env_file: ${ENV_FILE:-.env.docker}
+    command: "bundle exec rails db:migrate"
