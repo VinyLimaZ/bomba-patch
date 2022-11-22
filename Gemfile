@@ -51,7 +51,7 @@ gem 'jwt', '~> 2.5.0'
 # and default values.
 # [https://github.com/fnando/superconfig]
 gem 'superconfig', '~> 2.1.0'
-
+gem 'csv'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -61,7 +61,8 @@ gem 'superconfig', '~> 2.1.0'
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
-
+  gem 'faker', '~> 3.0'
+  gem 'pry-rails'
   gem 'factory_bot_rails', '~> 6.2.0'
 end
 
