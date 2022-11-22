@@ -2,8 +2,8 @@ module Api
   module V1
     class CsvController < ApplicationController
       def create
-        if Services::CSV::Validator.call(csv_params)
-          Services::CSV::Parser.call(csv_params)
+        if Services::Csv::Validator.call(csv_params)
+          Services::Csv::Parser.call(csv_params)
 
           head :ok
         else

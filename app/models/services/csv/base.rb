@@ -1,5 +1,5 @@
 module Services
-  module CSV
+  module Csv
     class Base
       def self.call(csv)
         send(:"#{self.class.to_s.downcase}", csv)

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :users, only: %i[show create update destroy]
     resources :teams, only: %i[index show create update destroy]
     resources :matches, only: %i[index show create update destroy]
+    resources :importers, only: [:create]
     post '/sign_in', to: 'authentication#create'
   end
 
