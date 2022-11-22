@@ -1,6 +1,7 @@
 require 'csv'
+
 module Services
-  module CSV
+  module Csv
     class Validator < Base
       class << self
         private

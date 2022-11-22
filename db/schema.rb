@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_22_020328) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_22_214850) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -42,6 +43,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_020328) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "importers", force: :cascade do |t|
+    t.integer "step", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "matches", force: :cascade do |t|
     t.integer "home_team_id"
     t.integer "away_team_id"
@@ -52,13 +59,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_020328) do
     t.integer "goals_home_team", default: 0
     t.integer "goals_away_team", default: 0
     t.datetime "current_match_time", precision: nil
+    t.index ["home_team_id", "away_team_id"], name: "index_matches_unique", unique: true
   end
 
   create_table "teams", force: :cascade do |t|
-    t.string "name"
+    t.citext "name", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_teams_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -71,4 +80,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_020328) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "matches", "teams", column: "away_team_id"
+  add_foreign_key "matches", "teams", column: "home_team_id"
 end
