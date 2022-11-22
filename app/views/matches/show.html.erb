@@ -1,0 +1,7 @@
+<div class="match" data-match-id="<%= @match.id %>" data-controller="matches">
+  <p><%= @match.home_team.name %> x <%= @match.away_team.name %></p>
+  <p><span data-team="home">0</span> x <span data-team="away">0</span></p>
+  <div>
+    <%= link_to "Voltar", matches_path %>
+  </div>
+</div>
