@@ -21,8 +21,8 @@ module Services
           {
             home_team_id: team_ids.first,
             away_team_id: team_ids.last,
-            home_team_goal: row[Match::INDEX_GOAL_HOME_TEAM],
-            away_team_goal: row[Match::INDEX_GOAL_AWAY_TEAM]
+            goals_home_team: row[Match::INDEX_GOAL_HOME_TEAM],
+            goals_away_team: row[Match::INDEX_GOAL_AWAY_TEAM],
           }
         end
       end
