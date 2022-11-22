@@ -13,7 +13,8 @@ unless User.any?
   users = [
     { name: 'Lucas Santos da Costa', email: 'lucas.costa@clicksign.com', password: default_password },
     { name: 'Vinicius Lima', email: 'vinicius.lima@clicksign.com', password: default_password },
-    { name: 'Deyvid Nascimento', email: 'deyvid.nascimento@clicksign.com', password: default_password }
+    { name: 'Deyvid Nascimento', email: 'deyvid.nascimento@clicksign.com', password: default_password },
+    { name: 'Dérick Pimenta', email: 'derick.pimenta@clicksign.com', password: default_password }
   ]
 
   users.each do |user|
