@@ -10,7 +10,11 @@ export default class extends Controller {
     this.channel = consumer.disconnect()
 
     document.querySelectorAll('.match').forEach(match => {
-      this.channel = consumer.subscriptions.create({channel: "MatchChannel", match_id: match.getAttribute("data-match-id")}, {
+      this.channel = consumer.subscriptions.create(
+        {
+          channel: "MatchChannel",
+          match_id: match.getAttribute("data-match-id")
+        }, {
         connected: this._cableConnected.bind(this),
         disconnected: this._cableDisconnected.bind(this),
         received: this._cableReceived.bind(this),
@@ -27,16 +31,13 @@ export default class extends Controller {
   }
 
   _cableReceived(data) {
-    // matches.forEach(match => {
-      let matchElement = document.querySelector('[data-match-id="' + data.id + '"]')
-      console.log(matchElement)
-      if (matchElement){
-        let homeTeam = matchElement.querySelector('[data-team="home"]')
-        let awayTeam = matchElement.querySelector('[data-team="away"]')
-        homeTeam.innerHTML = data.score.home_team
-        awayTeam.innerHTML = data.score.away_team
-      }
-    // })
+    let matchElement = document.querySelector('[data-match-id="' + data.id + '"]')
+    if (matchElement){
+      let homeTeam = matchElement.querySelector('[data-team="home"]')
+      let awayTeam = matchElement.querySelector('[data-team="away"]')
+      homeTeam.innerHTML = data.score.home_team
+      awayTeam.innerHTML = data.score.away_team
+    }
   }
 
 }
