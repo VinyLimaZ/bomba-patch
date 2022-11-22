@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   attr_accessor :current_user
-  prepend_before_action :authenticate_user!
+  # prepend_before_action :authenticate_user!
 
   def authenticate_user!
     payload = JwtAuth.decode(auth_token)

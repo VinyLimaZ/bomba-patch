@@ -1,16 +1,19 @@
 // JS Controller for global methods and functions
 import { Controller } from "@hotwired/stimulus"
+import consumer from "../channels/consumer"
 
 export default class extends Controller {
 
-  static targets = [  ]
+  static targets = [ ]
 
   connect() {
-    this.channel = consumer.subscriptions.create({channel: "MatchChannel", match_id: this.matchTarget.getAttribute("data-match-id")}, {
-      connected: this._cableConnected.bind(this),
-      disconnected: this._cableDisconnected.bind(this),
-      received: this._cableReceived.bind(this),
-    })
+    // document.querySelectorAll('.match').forEach(match => {
+      this.channel = consumer.subscriptions.create({channel: "MatchChannel"}, {
+        connected: this._cableConnected.bind(this),
+        disconnected: this._cableDisconnected.bind(this),
+        received: this._cableReceived.bind(this),
+      })
+    // });
   }
 
   _cableConnected() {
@@ -21,8 +24,17 @@ export default class extends Controller {
     // Called when the subscription has been terminated by the server
   }
 
-  _cableReceived(data) {
-    console.log(data)
+  _cableReceived(matches) {
+    console.log(matches)
+    matches.forEach(match => {
+      let matchElement = document.querySelector('[data-match-id="' + match.id + '"]')
+      if (matchElement){
+        let homeTeam = matchElement.querySelector('[data-team="home"]')
+        let awayTeam = matchElement.querySelector('[data-team="away"]')
+        homeTeam.innerHTML = match.score.home_team
+        awayTeam.innerHTML = match.score.away_team
+      }
+    })
   }
 
 }
