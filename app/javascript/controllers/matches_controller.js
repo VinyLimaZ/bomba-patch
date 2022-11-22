@@ -6,7 +6,11 @@ export default class extends Controller {
   static targets = [  ]
 
   connect() {
-    console.log("aqui")
+    this.channel = consumer.subscriptions.create({channel: "MatchChannel", match_id: this.matchTarget.getAttribute("data-match-id")}, {
+      connected: this._cableConnected.bind(this),
+      disconnected: this._cableDisconnected.bind(this),
+      received: this._cableReceived.bind(this),
+    })
   }
 
   _cableConnected() {
