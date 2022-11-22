@@ -3,7 +3,7 @@
 module Api
   module V1
     class AuthenticationController < ApplicationController
-      skip_before_action :authenticate_user!
+      # skip_before_action :authenticate_user!
 
       def create
         @user = User.find_by!(email: user_params[:email])

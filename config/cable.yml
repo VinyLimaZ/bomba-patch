@@ -1,11 +1,14 @@
 development:
   adapter: redis
-  url: redis://localhost:6379/1
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  channel_prefix: bomma_patch_development
 
 test:
-  adapter: test
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  channel_prefix: bomma_patch_test
 
 production:
   adapter: redis
   url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: bomba_patch_production
+  channel_prefix: bomma_patch_production
