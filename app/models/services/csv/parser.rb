@@ -7,7 +7,7 @@ module Services
         def parser(csv)
           ::CSV.parse(csv).each do |row|
             team_ids = Team::Creator.create(team_columns(row))
-            Match::Creator.create(match_columns(row), team_ids)
+            Match::Creator.create(match_columns(row, team_ids))
           end
         end
 
