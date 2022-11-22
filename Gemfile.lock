@@ -84,6 +84,7 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
+    foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.12.0)
@@ -122,6 +123,8 @@ GEM
       timeout
     nio4r (2.5.8)
     nokogiri (1.13.8-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.13.8-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.8-x86_64-linux)
       racc (~> 1.4)
@@ -211,6 +214,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  x86_64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -218,6 +222,7 @@ DEPENDENCIES
   bootsnap
   debug
   factory_bot_rails (~> 6.2.0)
+  foreman (~> 0.87.2)
   jsbundling-rails
   jsonapi-serializer (~> 2.2.0)
   jwt (~> 2.5.0)
